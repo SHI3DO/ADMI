@@ -1,0 +1,28 @@
+{
+  "name": "admi",
+  "version": "1.0.0",
+  "description": "ADMI",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "format": "npx prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SHI3DO/ADMI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SHI3DO/ADMI/issues"
+  },
+  "homepage": "https://github.com/SHI3DO/ADMI#readme",
+  "dependencies": {
+    "discord.js": "^13.8.1",
+    "dotenv": "^16.0.1",
+    "mongoose": "^6.4.2",
+    "nodemon": "^2.0.18",
+    "wokcommands": "^1.5.3"
+  }
+}
