@@ -1,11 +1,13 @@
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { ICommand } from 'wokcommands';
 import {parse} from 'node-html-parser'
-import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { Client, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 
 function resembed(title:string, problem_desc: string, problem_ul:string, problem_input_description: string, prorblem_output_description: string) {
     return new MessageEmbed()
-       .setFooter('Developed by shi3do#0001')
+       .setFooter({
+        text: '실제 문제에 더 많은 정보가 있을 수 있습니다. 아래 링크버튼을 눌러주세요.',
+       })
        .setColor('#FA747D')
        .setTitle(title)
        .addFields([
@@ -33,7 +35,10 @@ function resembed(title:string, problem_desc: string, problem_ul:string, problem
  }
 
  function parsehtml(content:string) {
-    return content.replace(/<\/?[^>]+(>|$)/g, "").replace(/\&nbsp;/g, '').replace(/\&lt;/g, '<')
+    if (content) {
+        return content.replace(/<\/?[^>]+(>|$)/g, "").replace(/\&nbsp;/g, '').replace(/\&lt;/g, '<').replace(/\&hellip;/g, '…').replace(/\&le;/g, '≤').replace(/\&ge;/g, '≥').replace(/\&gt;/g, '>')
+    }
+
  }
  
 export default {
@@ -66,10 +71,10 @@ export default {
                 const problem_description = parsehtml(problemvar.querySelector('#problem_description > p')?.toString()!)
                 const problem_input_description = parsehtml(problemvar.querySelector('#problem_input > p')?.toString()!)
                 const prorblem_output_description = parsehtml(problemvar.querySelector('#problem_output > p')?.toString()!)
-                const sample_i = parsehtml(problemvar.querySelector('pre[id^=sample-input]')?.toString()!)
-                const sample_o = parsehtml(problemvar.querySelector('pre[id^=sample-output]')?.toString()!)
+                //const sample_i = parsehtml(problemvar.querySelector('pre[id^=sample-input]')?.toString()!)
+                //const sample_o = parsehtml(problemvar.querySelector('pre[id^=sample-output]')?.toString()!)
 
-                const embed = resembed(`Baekjoon ${problem_number}`, problem_description, problem_ul, problem_input_description, prorblem_output_description)
+                const embed = resembed(`Baekjoon ${problem_number}`, problem_description!, problem_ul!, problem_input_description!, prorblem_output_description!)
                 
 
                 const row = new MessageActionRow()
