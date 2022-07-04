@@ -18,7 +18,7 @@ function resembed(
 ) {
   return new MessageEmbed()
     .setFooter({
-      text: "실제 문제에 더 많은 정보가 있을 수 있습니다. 아래 링크버튼을 눌러주세요.\n각 언어 별 정답 보기는 30초 후 사라집니다.",
+      text: "실제 문제에 더 많은 정보가 있을 수 있습니다. 아래 링크버튼을 눌러주세요.\n각 언어 별 정답 보기는 15초 후 사라집니다.",
     })
     .setColor("#FA747D")
     .setTitle(title)
@@ -46,17 +46,17 @@ function resembed(
     ]);
 }
 
-function ansembed(title: string, contents: string) {
+function ansembed(title: string, contents: string, language: string) {
   return new MessageEmbed()
     .setFooter({
-      text: "https://github.com/SHI3DO/ADMI/tree/main/Baekjoon_codeset 에서 기여해주세요.",
+      text: "아래 버튼을 통해 더 많은 문제에 기여해주세요.",
     })
     .setColor("#FA747D")
     .setTitle(title)
     .addFields([
       {
-        name: "해설",
-        value: `${contents}`,
+        name: language,
+        value: contents,
         inline: false,
       },
     ]);
@@ -92,9 +92,9 @@ export default {
   callback: async ({ interaction, channel }) => {
     const problem_number = interaction.options.getInteger("p_number");
     fetch("https://www.acmicpc.net/problem/" + problem_number)
-      .then(function (response) {
+      .then(async function (response) {
         if (response.status != 200) {
-          interaction.reply({
+          await interaction.reply({
             content: `Looks like there was a problem. Status Code: ${response.status}`,
           });
           return;
@@ -176,12 +176,18 @@ export default {
               ])
           );
 
-          const buttonrow = new MessageActionRow().addComponents(
+          const buttonrow = new MessageActionRow()
+          .addComponents(
             new MessageButton()
               .setLabel("Problem URL")
               .setURL("https://www.acmicpc.net/problem/" + problem_number)
               .setStyle("LINK")
-          );
+          ).addComponents(
+            new MessageButton()
+            .setLabel("Contribute")
+            .setURL("https://github.com/SHI3DO/ADMI/tree/main/Baekjoon_codeset")
+            .setStyle("LINK")
+          )
 
           await interaction.reply({
             embeds: [embed],
@@ -195,7 +201,7 @@ export default {
           const collector = channel.createMessageComponentCollector({
             filter,
             max: 1,
-            time: 1000 * 30,
+            time: 1000 * 15,
             componentType: "SELECT_MENU",
           });
 
@@ -206,12 +212,17 @@ export default {
                 "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Python/" +
                   problem_number +
                   ".py"
-              ).then(function (response_2) {
+              ).then(async function (response_2) {
                 if (response_2.status != 200) {
+                    await interaction.editReply({
+                        content: problem_number + "번의 예시는 아직 존재하지 않습니다.",
+                        embeds: [],
+                        components: [buttonrow]
+                    })
                   return;
                 }
                 response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed( `Baekjoon ${problem_number}`, "```python\n"+data_2+"```")
+                    const embed_2 = ansembed( `Baekjoon ${problem_number}`, "```python\n"+data_2+"```", "Python")
                     await interaction.editReply({
                         embeds: [embed, embed_2],
                         components: [buttonrow],
