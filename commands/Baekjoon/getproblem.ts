@@ -162,8 +162,8 @@ export default {
                   value: "C#",
                 },
                 {
-                  label: "node.js",
-                  value: "node.js",
+                  label: "Node.js",
+                  value: "Node.js",
                 },
                 {
                   label: "Go",
@@ -382,6 +382,156 @@ export default {
                       `Baekjoon ${problem_number}`,
                       "```Swift\n" + data_2 + "```",
                       "Swift"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "Text") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Text/" +
+                    problem_number +
+                    ".txt"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 Text 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Text\n" + data_2 + "```",
+                      "Text"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "C#") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C#/" +
+                    problem_number +
+                    ".cs"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 C# 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```C#\n" + data_2 + "```",
+                      "C#"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "Go") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Go/" +
+                    problem_number +
+                    ".go"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 Go 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Go\n" + data_2 + "```",
+                      "Go"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "Node.js") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Nodejs/" +
+                    problem_number +
+                    ".js"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 Node.js 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Node.js\n" + data_2 + "```",
+                      "Node.js"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "D") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/D/" +
+                    problem_number +
+                    ".d"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 D 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```D\n" + data_2 + "```",
+                      "D"
                     );
                     await i.update({
                       embeds: [embed, embed_2],
