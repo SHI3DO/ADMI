@@ -175,25 +175,41 @@ export default {
 
           const filter = (DropDown: MessageComponentInteraction) => {
             return interaction.user.id === DropDown.user.id;
-          }
+          };
 
           const collector = channel.createMessageComponentCollector({
             filter,
-            max:1,
-            time: 1000*5,
-            componentType: "SELECT_MENU"
-          })
+            max: 1,
+            time: 1000 * 30,
+            componentType: "SELECT_MENU",
+          });
 
-          collector.on('collect', async (i) => {
-            console.log(i.values[0])
-          })
-
-          collector.on('end', async () => {
+          var reptxt = "";
+          collector.on("collect", async (i) => {
+            const value = i.values[0];
+            if (value === "Python") {
+              fetch(
+                "https://github.com/SHI3DO/ADMI/blob/main/Baekjoon_codeset/Python/" +
+                  problem_number + ".py"
+              ).then(function (response_2) {
+                console.log(response_2)
+                if (response_2.status != 200) {
+                  reptxt = "아직 답 예시가 준비되지 않았습니다."
+                  return;
+                }
+                response_2.text().then(async function (data_2) {
+                  console.log(data_2!);
+                });
+              });
+            }
+          });
+          console.log(reptxt)
+          collector.on("end", async () => {
             await interaction.editReply({
-                embeds: [embed],
-                components: [buttonrow]
-            })
-          })
+              content: `${reptxt}`,
+              components: [buttonrow],
+            });
+          });
         });
       })
       .catch(function (err) {
