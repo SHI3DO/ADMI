@@ -309,7 +309,4 @@ export default {
       });
   },
 } as ICommand;
-function async(async: any, arg1: any, arg2: {}) {
-    throw new Error("Function not implemented.");
-}
 
