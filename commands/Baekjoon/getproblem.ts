@@ -49,6 +49,8 @@ function parsehtml(content: string) {
       .replace(/\&hellip;/g, "…")
       .replace(/\&le;/g, "≤")
       .replace(/\&ge;/g, "≥")
+      .replace(/\&#39;/g, "'")
+      .replace(/\&quot;/g, '"')
       .replace(/\&gt;/g, ">");
   }
 }
