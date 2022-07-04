@@ -243,7 +243,7 @@ export default {
               fetch(
                 "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C++/" +
                   problem_number +
-                  ".py"
+                  ".cpp"
               ).then(async function (response_2) {
                 if (response_2.status != 200) {
                   await i.update({
