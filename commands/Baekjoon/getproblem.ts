@@ -162,6 +162,10 @@ export default {
                   value: "C#",
                 },
                 {
+                    label: "C",
+                    value: "C"
+                },
+                {
                   label: "Node.js",
                   value: "Node.js",
                 },
@@ -210,167 +214,66 @@ export default {
 
           collector.on("collect", async (i) => {
             const value = i.values[0];
+            let language = ""
+            let file_extension = ""
+            let lan_url = ""
             if (value === "Python") {
-              fetch(
-                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Python/" +
-                  problem_number +
-                  ".py"
-              ).then(async function (response_2) {
-                if (response_2.status != 200) {
-                  await i.update({
-                    content:
-                      problem_number +
-                      "번의 Python 예시는 아직 존재하지 않습니다.",
-                    embeds: [],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                  return;
-                }
-                response_2.text().then(async function (data_2) {
-                  const embed_2 = ansembed(
-                    `Baekjoon ${problem_number}`,
-                    "```python\n" + data_2 + "```",
-                    "Python"
-                  );
-                  await i.update({
-                    embeds: [embed, embed_2],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                });
-              });
+                language = "Python"
+                file_extension = "py"
+                lan_url = "Python"
             } else if (value === "C++") {
-              fetch(
-                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C++/" +
-                  problem_number +
-                  ".cpp"
-              ).then(async function (response_2) {
-                if (response_2.status != 200) {
-                  await i.update({
-                    content:
-                      problem_number +
-                      "번의 C++ 예시는 아직 존재하지 않습니다.",
-                    embeds: [],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                  return;
-                }
-                response_2.text().then(async function (data_2) {
-                  const embed_2 = ansembed(
-                    `Baekjoon ${problem_number}`,
-                    "```C++\n" + data_2 + "```",
-                    "C++"
-                  );
-                  await i.update({
-                    embeds: [embed, embed_2],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                });
-              });
+                language = "C++"
+                file_extension = "cpp"
+                lan_url = "C++"
             } else if (value === "Java") {
-              fetch(
-                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Java/" +
-                  problem_number +
-                  ".java"
-              ).then(async function (response_2) {
-                if (response_2.status != 200) {
-                  await i.update({
-                    content:
-                      problem_number +
-                      "번의 Java 예시는 아직 존재하지 않습니다.",
-                    embeds: [],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                  return;
-                }
-                response_2.text().then(async function (data_2) {
-                  const embed_2 = ansembed(
-                    `Baekjoon ${problem_number}`,
-                    "```Java\n" + data_2 + "```",
-                    "Java"
-                  );
-                  await i.update({
-                    embeds: [embed, embed_2],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                });
-              });
+                language = "Java"
+                file_extension = "java"
+                lan_url = "Java"
             } else if (value === "Ruby") {
-              fetch(
-                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Ruby/" +
-                  problem_number +
-                  ".rb"
-              ).then(async function (response_2) {
-                if (response_2.status != 200) {
-                  await i.update({
-                    content:
-                      problem_number +
-                      "번의 Ruby 예시는 아직 존재하지 않습니다.",
-                    embeds: [],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                  return;
-                }
-                response_2.text().then(async function (data_2) {
-                  const embed_2 = ansembed(
-                    `Baekjoon ${problem_number}`,
-                    "```Ruby\n" + data_2 + "```",
-                    "Ruby"
-                  );
-                  await i.update({
-                    embeds: [embed, embed_2],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                });
-              });
+                language = "Ruby"
+                file_extension = "rb"
+                lan_url = "Ruby"
             } else if (value === "Kotlin") {
-              fetch(
-                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Kotlin/" +
-                  problem_number +
-                  ".kt"
-              ).then(async function (response_2) {
-                if (response_2.status != 200) {
-                  await i.update({
-                    content:
-                      problem_number +
-                      "번의 Kotlin 예시는 아직 존재하지 않습니다.",
-                    embeds: [],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                  return;
-                }
-                response_2.text().then(async function (data_2) {
-                  const embed_2 = ansembed(
-                    `Baekjoon ${problem_number}`,
-                    "```Kotlin\n" + data_2 + "```",
-                    "Kotlin"
-                  );
-                  await i.update({
-                    embeds: [embed, embed_2],
-                    components: [buttonrow],
-                  });
-                  collector.stop();
-                });
-              });
+                language = "Kotlin"
+                file_extension = "kt"
+                lan_url = "Kotlin"
             } else if (value === "Swift") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Swift/" +
-                    problem_number +
-                    ".swift"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
+                language = "Swift"
+                file_extension = "swift"
+                lan_url = "Swift"
+            } else if (value === "Text") {
+                language = "Text"
+                file_extension = "txt"
+                lan_url = "Text"
+            } else if (value === "C#") {
+                language = "C#"
+                file_extension = "cs"
+                lan_url = "C%23"
+            } else if (value === "Go") {
+                language = "Go"
+                file_extension = "go"
+                lan_url = "Go"
+            } else if (value === "Node.js") {
+                language = "Node.js"
+                file_extension = "js"
+                lan_url = "Nodejs"
+            } else if (value === "D") {
+                language = "D"
+                file_extension = "d"
+                lan_url = "D"
+            } else if (value === "C") {
+                language = "C"
+                file_extension = "c"
+                lan_url = "C"
+            }
+            console.log(language, file_extension, lan_url)
+            fetch(`https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/${lan_url}/${problem_number}.${file_extension}`)
+            .then(async function (response_2) {
+                if (response_2.status != 200) {
                     await i.update({
                       content:
                         problem_number +
-                        "번의 Swift 예시는 아직 존재하지 않습니다.",
+                        "번의 "+language + " 예시는 아직 존재하지 않습니다.",
                       embeds: [],
                       components: [buttonrow],
                     });
@@ -380,8 +283,8 @@ export default {
                   response_2.text().then(async function (data_2) {
                     const embed_2 = ansembed(
                       `Baekjoon ${problem_number}`,
-                      "```Swift\n" + data_2 + "```",
-                      "Swift"
+                      "```" + file_extension + "\n" + data_2 + "```",
+                      language
                     );
                     await i.update({
                       embeds: [embed, embed_2],
@@ -389,158 +292,7 @@ export default {
                     });
                     collector.stop();
                   });
-                });
-              } else if (value === "Text") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Text/" +
-                    problem_number +
-                    ".txt"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 Text 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```txt\n" + data_2 + "```",
-                      "Text"
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-                });
-              } else if (value === "C#") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C%23/" +
-                    problem_number +
-                    ".cs"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 C# 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```Cs\n" + data_2 + "```",
-                      "C#"
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-                });
-              } else if (value === "Go") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Go/" +
-                    problem_number +
-                    ".go"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 Go 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```Go\n" + data_2 + "```",
-                      "Go"
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-                });
-              } else if (value === "Node.js") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Nodejs/" +
-                    problem_number +
-                    ".js"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 Node.js 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```js\n" + data_2 + "```",
-                      "Node.js"
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-                });
-              } else if (value === "D") {
-                fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/D/" +
-                    problem_number +
-                    ".d"
-                ).then(async function (response_2) {
-                  if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 D 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```D\n" + data_2 + "```",
-                      "D"
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-                });
-              }
+            })
           });
           collector.on("end", async () => {
             await interaction.editReply({
@@ -557,3 +309,7 @@ export default {
       });
   },
 } as ICommand;
+function async(async: any, arg1: any, arg2: {}) {
+    throw new Error("Function not implemented.");
+}
+
