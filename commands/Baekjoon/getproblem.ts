@@ -268,7 +268,36 @@ export default {
                   collector.stop();
                 });
               });
-            }
+            } else if (value === "Java") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Java/" +
+                    problem_number +
+                    ".java"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number + "번의 Java 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Java\n" + data_2 + "```",
+                      "Java"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              }
           });
           collector.on("end", async () => {
             await interaction.editReply({
