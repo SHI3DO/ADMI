@@ -219,7 +219,7 @@ export default {
                 if (response_2.status != 200) {
                   await i.update({
                     content:
-                      problem_number + "번의 예시는 아직 존재하지 않습니다.",
+                      problem_number + "번의 Python 예시는 아직 존재하지 않습니다.",
                     embeds: [],
                     components: [buttonrow],
                   });
@@ -248,7 +248,7 @@ export default {
                 if (response_2.status != 200) {
                   await i.update({
                     content:
-                      problem_number + "번의 예시는 아직 존재하지 않습니다.",
+                      problem_number + "번의 C++ 예시는 아직 존재하지 않습니다.",
                     embeds: [],
                     components: [buttonrow],
                   });
