@@ -500,7 +500,7 @@ export default {
                   response_2.text().then(async function (data_2) {
                     const embed_2 = ansembed(
                       `Baekjoon ${problem_number}`,
-                      "```Node.js\n" + data_2 + "```",
+                      "```js\n" + data_2 + "```",
                       "Node.js"
                     );
                     await i.update({
