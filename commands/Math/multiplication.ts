@@ -20,8 +20,8 @@ export default {
     },
   ],
 
-  callback: ({ interaction }) => {
-    interaction.reply({
+  callback: async ({ interaction }) => {
+    await interaction.reply({
       content: `${interaction.options.getNumber(
         "a"
       )!} * ${interaction.options.getNumber("b")!} = ${

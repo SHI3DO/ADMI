@@ -1,7 +1,13 @@
 import { ApplicationCommandOptionTypes } from "discord.js/typings/enums";
 import { ICommand } from "wokcommands";
 import { parse } from "node-html-parser";
-import { MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
+import {
+  MessageActionRow,
+  MessageButton,
+  MessageComponentInteraction,
+  MessageEmbed,
+  MessageSelectMenu,
+} from "discord.js";
 
 function resembed(
   title: string,
@@ -12,7 +18,7 @@ function resembed(
 ) {
   return new MessageEmbed()
     .setFooter({
-      text: "실제 문제에 더 많은 정보가 있을 수 있습니다. 아래 링크버튼을 눌러주세요.",
+      text: "실제 문제에 더 많은 정보가 있을 수 있습니다. 아래 링크버튼을 눌러주세요.\n각 언어 별 정답 보기는 30초 후 사라집니다.",
     })
     .setColor("#FA747D")
     .setTitle(title)
@@ -68,7 +74,7 @@ export default {
     },
   ],
 
-  callback: ({ interaction }) => {
+  callback: async ({ interaction, channel }) => {
     const problem_number = interaction.options.getInteger("p_number");
     fetch("https://www.acmicpc.net/problem/" + problem_number)
       .then(function (response) {
@@ -78,7 +84,7 @@ export default {
           });
           return;
         }
-        response.text().then(function (data) {
+        response.text().then(async function (data) {
           const problemvar = parse(data);
           const problem_ul = parsehtml(
             problemvar.querySelector("#problem_description > ul")?.toString()!
@@ -104,15 +110,90 @@ export default {
           );
 
           const row = new MessageActionRow().addComponents(
+            new MessageSelectMenu()
+              .setCustomId("row")
+              .setPlaceholder("Answer")
+              .addOptions([
+                {
+                  label: "Python",
+                  value: "Python",
+                },
+                {
+                  label: "C++",
+                  value: "C++",
+                },
+                {
+                  label: "Java",
+                  value: "Java",
+                },
+                {
+                  label: "Ruby",
+                  value: "Ruby",
+                },
+                {
+                  label: "Kotlin",
+                  value: "Kotlin",
+                },
+                {
+                  label: "Swift",
+                  value: "Swift",
+                },
+                {
+                  label: "Text",
+                  value: "Text",
+                },
+                {
+                  label: "C#",
+                  value: "C#",
+                },
+                {
+                  label: "node.js",
+                  value: "node.js",
+                },
+                {
+                  label: "Go",
+                  value: "Go",
+                },
+                {
+                  label: "D",
+                  value: "D",
+                },
+              ])
+          );
+
+          const buttonrow = new MessageActionRow().addComponents(
             new MessageButton()
               .setLabel("Problem URL")
               .setURL("https://www.acmicpc.net/problem/" + problem_number)
               .setStyle("LINK")
           );
-          interaction.reply({
+
+          await interaction.reply({
             embeds: [embed],
-            components: [row],
+            components: [row, buttonrow],
           });
+
+          const filter = (DropDown: MessageComponentInteraction) => {
+            return interaction.user.id === DropDown.user.id;
+          }
+
+          const collector = channel.createMessageComponentCollector({
+            filter,
+            max:1,
+            time: 1000*5,
+            componentType: "SELECT_MENU"
+          })
+
+          collector.on('collect', async (i) => {
+            console.log(i.values[0])
+          })
+
+          collector.on('end', async () => {
+            await interaction.editReply({
+                embeds: [embed],
+                components: [buttonrow]
+            })
+          })
         });
       })
       .catch(function (err) {
