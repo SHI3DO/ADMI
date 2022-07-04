@@ -177,17 +177,20 @@ export default {
           );
 
           const buttonrow = new MessageActionRow()
-          .addComponents(
-            new MessageButton()
-              .setLabel("Problem URL")
-              .setURL("https://www.acmicpc.net/problem/" + problem_number)
-              .setStyle("LINK")
-          ).addComponents(
-            new MessageButton()
-            .setLabel("Contribute")
-            .setURL("https://github.com/SHI3DO/ADMI/tree/main/Baekjoon_codeset")
-            .setStyle("LINK")
-          )
+            .addComponents(
+              new MessageButton()
+                .setLabel("Problem URL")
+                .setURL("https://www.acmicpc.net/problem/" + problem_number)
+                .setStyle("LINK")
+            )
+            .addComponents(
+              new MessageButton()
+                .setLabel("Contribute")
+                .setURL(
+                  "https://github.com/SHI3DO/ADMI/tree/main/Baekjoon_codeset"
+                )
+                .setStyle("LINK")
+            );
 
           await interaction.reply({
             embeds: [embed],
@@ -214,21 +217,55 @@ export default {
                   ".py"
               ).then(async function (response_2) {
                 if (response_2.status != 200) {
-                    await i.update({
-                        content: problem_number + "번의 예시는 아직 존재하지 않습니다.",
-                        embeds: [],
-                        components: [buttonrow]
-                    })
-                    collector.stop()
+                  await i.update({
+                    content:
+                      problem_number + "번의 예시는 아직 존재하지 않습니다.",
+                    embeds: [],
+                    components: [buttonrow],
+                  });
+                  collector.stop();
                   return;
                 }
                 response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed( `Baekjoon ${problem_number}`, "```python\n"+data_2+"```", "Python")
-                    await i.update({
-                        embeds: [embed, embed_2],
-                        components: [buttonrow],
-                      });
-                      collector.stop()
+                  const embed_2 = ansembed(
+                    `Baekjoon ${problem_number}`,
+                    "```python\n" + data_2 + "```",
+                    "Python"
+                  );
+                  await i.update({
+                    embeds: [embed, embed_2],
+                    components: [buttonrow],
+                  });
+                  collector.stop();
+                });
+              });
+            } else if (value === "C++") {
+              fetch(
+                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C++/" +
+                  problem_number +
+                  ".py"
+              ).then(async function (response_2) {
+                if (response_2.status != 200) {
+                  await i.update({
+                    content:
+                      problem_number + "번의 예시는 아직 존재하지 않습니다.",
+                    embeds: [],
+                    components: [buttonrow],
+                  });
+                  collector.stop();
+                  return;
+                }
+                response_2.text().then(async function (data_2) {
+                  const embed_2 = ansembed(
+                    `Baekjoon ${problem_number}`,
+                    "```C++\n" + data_2 + "```",
+                    "C++"
+                  );
+                  await i.update({
+                    embeds: [embed, embed_2],
+                    components: [buttonrow],
+                  });
+                  collector.stop();
                 });
               });
             }
