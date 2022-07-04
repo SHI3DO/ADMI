@@ -297,6 +297,64 @@ export default {
                     collector.stop();
                   });
                 });
+              } else if (value === "Ruby") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Ruby/" +
+                    problem_number +
+                    ".rb"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number + "번의 Ruby 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Ruby\n" + data_2 + "```",
+                      "Ruby"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              } else if (value === "Kotlin") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Kotlin/" +
+                    problem_number +
+                    ".kt"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number + "번의 Kotlin 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Kotlin\n" + data_2 + "```",
+                      "Kotlin"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
               }
           });
           collector.on("end", async () => {
