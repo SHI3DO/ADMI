@@ -422,7 +422,7 @@ export default {
                 });
               } else if (value === "C#") {
                 fetch(
-                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C#/" +
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/C%23/" +
                     problem_number +
                     ".cs"
                 ).then(async function (response_2) {
@@ -440,7 +440,7 @@ export default {
                   response_2.text().then(async function (data_2) {
                     const embed_2 = ansembed(
                       `Baekjoon ${problem_number}`,
-                      "```C#\n" + data_2 + "```",
+                      "```Cs\n" + data_2 + "```",
                       "C#"
                     );
                     await i.update({
