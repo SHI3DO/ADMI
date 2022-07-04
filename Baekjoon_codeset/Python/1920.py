@@ -9,3 +9,5 @@ for i in b:
         print(1)
     else:
         print(0)
+
+# shi3do /
