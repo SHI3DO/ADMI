@@ -360,7 +360,37 @@ export default {
                   collector.stop();
                 });
               });
-            }
+            } else if (value === "Swift") {
+                fetch(
+                  "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Swift/" +
+                    problem_number +
+                    ".swift"
+                ).then(async function (response_2) {
+                  if (response_2.status != 200) {
+                    await i.update({
+                      content:
+                        problem_number +
+                        "번의 Swift 예시는 아직 존재하지 않습니다.",
+                      embeds: [],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                    return;
+                  }
+                  response_2.text().then(async function (data_2) {
+                    const embed_2 = ansembed(
+                      `Baekjoon ${problem_number}`,
+                      "```Swift\n" + data_2 + "```",
+                      "Swift"
+                    );
+                    await i.update({
+                      embeds: [embed, embed_2],
+                      components: [buttonrow],
+                    });
+                    collector.stop();
+                  });
+                });
+              }
           });
           collector.on("end", async () => {
             await interaction.editReply({
