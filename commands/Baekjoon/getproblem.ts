@@ -46,6 +46,22 @@ function resembed(
     ]);
 }
 
+function ansembed(title: string, contents: string) {
+  return new MessageEmbed()
+    .setFooter({
+      text: "https://github.com/SHI3DO/ADMI/tree/main/Baekjoon_codeset 에서 기여해주세요.",
+    })
+    .setColor("#FA747D")
+    .setTitle(title)
+    .addFields([
+      {
+        name: "해설",
+        value: `${contents}`,
+        inline: false,
+      },
+    ]);
+}
+
 function parsehtml(content: string) {
   if (content) {
     return content
@@ -60,7 +76,6 @@ function parsehtml(content: string) {
       .replace(/\&gt;/g, ">");
   }
 }
-
 export default {
   category: "Baekjoon",
   description: "Get Baekjoon Problem contents",
@@ -184,29 +199,30 @@ export default {
             componentType: "SELECT_MENU",
           });
 
-          var reptxt = "";
           collector.on("collect", async (i) => {
             const value = i.values[0];
             if (value === "Python") {
               fetch(
-                "https://github.com/SHI3DO/ADMI/blob/main/Baekjoon_codeset/Python/" +
-                  problem_number + ".py"
+                "https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/Python/" +
+                  problem_number +
+                  ".py"
               ).then(function (response_2) {
-                console.log(response_2)
                 if (response_2.status != 200) {
-                  reptxt = "아직 답 예시가 준비되지 않았습니다."
                   return;
                 }
                 response_2.text().then(async function (data_2) {
-                  console.log(data_2!);
+                    const embed_2 = ansembed( `Baekjoon ${problem_number}`, "```python\n"+data_2+"```")
+                    await interaction.editReply({
+                        embeds: [embed, embed_2],
+                        components: [buttonrow],
+                      });
                 });
               });
             }
           });
-          console.log(reptxt)
           collector.on("end", async () => {
             await interaction.editReply({
-              content: `${reptxt}`,
+              embeds: [embed],
               components: [buttonrow],
             });
           });
