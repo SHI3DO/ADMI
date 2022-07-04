@@ -214,19 +214,21 @@ export default {
                   ".py"
               ).then(async function (response_2) {
                 if (response_2.status != 200) {
-                    await interaction.editReply({
+                    await i.update({
                         content: problem_number + "번의 예시는 아직 존재하지 않습니다.",
                         embeds: [],
                         components: [buttonrow]
                     })
+                    collector.stop()
                   return;
                 }
                 response_2.text().then(async function (data_2) {
                     const embed_2 = ansembed( `Baekjoon ${problem_number}`, "```python\n"+data_2+"```", "Python")
-                    await interaction.editReply({
+                    await i.update({
                         embeds: [embed, embed_2],
                         components: [buttonrow],
                       });
+                      collector.stop()
                 });
               });
             }
