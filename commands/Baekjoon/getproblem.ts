@@ -410,7 +410,7 @@ export default {
                   response_2.text().then(async function (data_2) {
                     const embed_2 = ansembed(
                       `Baekjoon ${problem_number}`,
-                      "```Text\n" + data_2 + "```",
+                      "```txt\n" + data_2 + "```",
                       "Text"
                     );
                     await i.update({
