@@ -18,6 +18,7 @@ client.on("ready", async () => {
     mongoUri: process.env.MONGO_URI,
   });
 
+  client.user?.setActivity("Schutz von shi3do", { type: "PLAYING" });
   console.log("Hello.");
 });
 process.on("unhandledRejection", async (err) => {

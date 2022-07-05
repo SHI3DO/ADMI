@@ -78,7 +78,7 @@ function parsehtml(content: string) {
 }
 export default {
   category: "Baekjoon",
-  description: "Get Baekjoon Problem contents",
+  description: "백준 문제 가져오기",
   slash: true,
   options: [
     {
@@ -162,8 +162,8 @@ export default {
                   value: "C#",
                 },
                 {
-                    label: "C",
-                    value: "C"
+                  label: "C",
+                  value: "C",
                 },
                 {
                   label: "Node.js",
@@ -214,85 +214,88 @@ export default {
 
           collector.on("collect", async (i) => {
             const value = i.values[0];
-            let language = ""
-            let file_extension = ""
-            let lan_url = ""
+            let language = "";
+            let file_extension = "";
+            let lan_url = "";
             if (value === "Python") {
-                language = "Python"
-                file_extension = "py"
-                lan_url = "Python"
+              language = "Python";
+              file_extension = "py";
+              lan_url = "Python";
             } else if (value === "C++") {
-                language = "C++"
-                file_extension = "cpp"
-                lan_url = "C++"
+              language = "C++";
+              file_extension = "cpp";
+              lan_url = "C++";
             } else if (value === "Java") {
-                language = "Java"
-                file_extension = "java"
-                lan_url = "Java"
+              language = "Java";
+              file_extension = "java";
+              lan_url = "Java";
             } else if (value === "Ruby") {
-                language = "Ruby"
-                file_extension = "rb"
-                lan_url = "Ruby"
+              language = "Ruby";
+              file_extension = "rb";
+              lan_url = "Ruby";
             } else if (value === "Kotlin") {
-                language = "Kotlin"
-                file_extension = "kt"
-                lan_url = "Kotlin"
+              language = "Kotlin";
+              file_extension = "kt";
+              lan_url = "Kotlin";
             } else if (value === "Swift") {
-                language = "Swift"
-                file_extension = "swift"
-                lan_url = "Swift"
+              language = "Swift";
+              file_extension = "swift";
+              lan_url = "Swift";
             } else if (value === "Text") {
-                language = "Text"
-                file_extension = "txt"
-                lan_url = "Text"
+              language = "Text";
+              file_extension = "txt";
+              lan_url = "Text";
             } else if (value === "C#") {
-                language = "C#"
-                file_extension = "cs"
-                lan_url = "C%23"
+              language = "C#";
+              file_extension = "cs";
+              lan_url = "C%23";
             } else if (value === "Go") {
-                language = "Go"
-                file_extension = "go"
-                lan_url = "Go"
+              language = "Go";
+              file_extension = "go";
+              lan_url = "Go";
             } else if (value === "Node.js") {
-                language = "Node.js"
-                file_extension = "js"
-                lan_url = "Nodejs"
+              language = "Node.js";
+              file_extension = "js";
+              lan_url = "Nodejs";
             } else if (value === "D") {
-                language = "D"
-                file_extension = "d"
-                lan_url = "D"
+              language = "D";
+              file_extension = "d";
+              lan_url = "D";
             } else if (value === "C") {
-                language = "C"
-                file_extension = "c"
-                lan_url = "C"
+              language = "C";
+              file_extension = "c";
+              lan_url = "C";
             }
-            console.log(language, file_extension, lan_url)
-            fetch(`https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/${lan_url}/${problem_number}.${file_extension}`)
-            .then(async function (response_2) {
-                if (response_2.status != 200) {
-                    await i.update({
-                      content:
-                        problem_number +
-                        "번의 "+language + " 예시는 아직 존재하지 않습니다.",
-                      embeds: [],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                    return;
-                  }
-                  response_2.text().then(async function (data_2) {
-                    const embed_2 = ansembed(
-                      `Baekjoon ${problem_number}`,
-                      "```" + file_extension + "\n" + data_2 + "```",
-                      language
-                    );
-                    await i.update({
-                      embeds: [embed, embed_2],
-                      components: [buttonrow],
-                    });
-                    collector.stop();
-                  });
-            })
+            console.log(language, file_extension, lan_url);
+            fetch(
+              `https://raw.githubusercontent.com/SHI3DO/ADMI/main/Baekjoon_codeset/${lan_url}/${problem_number}.${file_extension}`
+            ).then(async function (response_2) {
+              if (response_2.status != 200) {
+                await i.update({
+                  content:
+                    problem_number +
+                    "번의 " +
+                    language +
+                    " 예시는 아직 존재하지 않습니다.",
+                  embeds: [],
+                  components: [buttonrow],
+                });
+                collector.stop();
+                return;
+              }
+              response_2.text().then(async function (data_2) {
+                const embed_2 = ansembed(
+                  `Baekjoon ${problem_number}`,
+                  "```" + file_extension + "\n" + data_2 + "```",
+                  language
+                );
+                await i.update({
+                  embeds: [embed, embed_2],
+                  components: [buttonrow],
+                });
+                collector.stop();
+              });
+            });
           });
           collector.on("end", async () => {
             await interaction.editReply({
@@ -309,4 +312,3 @@ export default {
       });
   },
 } as ICommand;
-
